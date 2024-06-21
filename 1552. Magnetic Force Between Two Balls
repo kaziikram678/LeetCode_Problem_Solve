@@ -1,0 +1,38 @@
+bool canplace(vector<int>& position, long long s, long long min_force, long long m)
+{
+    long long last_pos = -1;
+    for(long long i=0;i<s;i++)
+    {
+        if(position[i]-last_pos >= min_force || last_pos == -1)
+        {
+            m--;
+            last_pos = position[i];
+        }
+        if(m==0) break;
+    }
+    return m==0;
+}
+
+class Solution {
+public:
+    int maxDistance(vector<int>& position, int m) {
+        long long lo = 0;
+        long long hi =  1e9;
+        sort(position.begin(),position.end());
+        while(hi-lo>1)
+        {
+            long long mid = (lo+hi)/2;
+            
+            if(canplace(position, position.size(), mid, m))
+            {
+                lo = mid;
+            }
+            else hi = mid-1;
+        }
+        if(canplace(position, position.size(), hi, m)) return hi;
+        else return lo;
+        
+
+        
+    }
+};
