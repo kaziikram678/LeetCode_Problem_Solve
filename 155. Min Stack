@@ -1,0 +1,47 @@
+class MinStack {
+public:
+    stack<long long> q,getmin;
+    MinStack() {
+        
+    }
+    
+    void push(long long val) {
+        if(q.empty() && getmin.empty())
+        {
+            q.push(val);
+            getmin.push(val);
+            return;
+        }
+
+        long long x = min(val,getmin.top());
+
+        q.push(val);
+        getmin.push(x);
+    }
+    
+    void pop() {
+        if(!q.empty())
+        {
+            q.pop();
+            getmin.pop();
+        }
+        
+    }
+    
+    int top() {
+        return q.top();
+    }
+    
+    int getMin() {
+        return getmin.top();
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
