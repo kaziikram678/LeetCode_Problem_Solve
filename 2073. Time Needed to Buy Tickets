@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int timeRequiredToBuy(vector<int>& t, int k) {
+        queue<int> q;
+        for(int i=0;i<t.size();i++)
+        {
+            q.push(t[i]);
+        }
+        int cnt=0;
+        while(true)
+        {
+            q.front()--;
+            cnt++;
+
+            if(k==0 && q.front()==0) break;
+
+            if(k==0) k = q.size()-1;
+            else k--; 
+            
+            if(q.front()!=0) q.push(q.front());
+            q.pop();
+            
+            
+        }
+        return cnt;
+    }
+};
