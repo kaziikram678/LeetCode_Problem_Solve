@@ -1,0 +1,41 @@
+class Solution {
+public:
+    
+    void leftsum(vector<int>& nums, vector<int>& v1)
+    {
+        v1[0] = 0;
+        for(int i=1;i<=nums.size()-1;i++)
+        {
+            v1[i] = v1[i-1]+nums[i-1];
+        }
+    }
+    void rightsum(vector<int>& nums, vector<int>& v2)
+    {
+        for(int i=v2.size()-2;i>=0;i--)
+        {
+            v2[i] = nums[i+1]+v2[i+1];
+        }
+    }
+    vector<int> leftRightDifference(vector<int>& nums) {
+        int sz = nums.size();
+        vector<int> v1(sz,0);
+        vector<int> v2(sz,0);
+        vector<int> v3(sz,0);
+        leftsum(nums,v1);
+        // for(int i=0;i<v1.size();i++)
+        // {
+        //     cout<<v1[i]<<" ";
+        // }
+        // for(int i=0;i<v2.size();i++)
+        // {
+        //     cout<<v2[i]<<" ";
+        // }
+        rightsum(nums,v2);
+
+        for(int i=0;i<v3.size();i++)
+        {
+            v3[i] = abs(v1[i]-v2[i]);
+        }
+        return v3;
+    }
+};
