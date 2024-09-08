@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool vis[100][100];
+
+    vector<pair<int,int>> d = {{0,1},{0,-1},{-1,0},{1,0}};
+
+    bool valid(int ci, int cj,vector<vector<int>>& image, int color, int r, int c,int pre_color)
+    {
+        if(ci<0 || ci>=r || cj<0 || cj>=c || image[ci][cj]!=pre_color)
+        {
+            return false;
+        }
+        return true;
+    }
+    void dfs(int si,int sj,vector<vector<int>>& image, int color, int r, int c)
+    {
+        int pre_color = image[si][sj];
+        vis[si][sj] = true;
+        image[si][sj] = color;
+        for(int i=0;i<4;i++)
+        {
+            int ci = si + d[i].first;
+            int cj = sj + d[i].second;
+
+            if(valid(ci,cj,image,color,r,c,pre_color)==true && !vis[ci][cj])
+            {
+                dfs(ci,cj,image,color,r,c);
+            }
+        }
+
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int r = image.size();
+        int c = image[0].size();
+        dfs(sr,sc,image,color,r,c);
+        return image;
+    }
+};
