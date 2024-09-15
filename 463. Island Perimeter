@@ -1,0 +1,56 @@
+class Solution {
+public:
+    bool vis[200][200];
+    int cnt;
+    int r,c;
+    vector<pair<int,int>> d = {{1,0},{0,1},{-1,0},{0,-1}};
+    bool valid(int ci, int cj)
+    {
+        if(ci>=r || ci<0 || cj>=c || cj<0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    void dfs(int si, int sj, vector<vector<int>>& grid)
+    {
+        vis[si][sj] = true;
+        
+        for(int i=0;i<4;i++)
+        {
+            int ci = si + d[i].first;
+            int cj = sj + d[i].second;
+            if(valid(ci,cj))
+            {
+                if(grid[ci][cj]==0)
+                {
+                    cnt++;
+                }
+            }
+            else cnt++;
+            if(valid(ci,cj)==true && !vis[ci][cj] && vis[ci][cj]==1)
+            {
+                dfs(ci,cj,grid);
+            }
+        }
+
+    }
+    int islandPerimeter(vector<vector<int>>& grid) {
+        r = grid.size();
+        c = grid[0].size();
+        memset(vis,false,sizeof(vis));
+        cnt = 0;
+        for(int i=0;i<r;i++)
+        {
+            for(int j=0;j<c;j++)
+            {
+                if(!vis[i][j] && grid[i][j]==1)
+                {
+                    dfs(i,j,grid);
+                }
+            }
+        }
+        return cnt;
+    }
+};
